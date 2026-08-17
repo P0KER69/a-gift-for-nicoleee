@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="color-scheme" content="dark">
+    <meta name="theme-color" content="#080808">
+
+    <!-- Makes it feel closer to a native app if added to the home screen on a phone -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <title>For You.</title>
+
+    <meta
+        name="description"
+        content="Something I made."
+    >
+
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90' text-anchor='middle' x='50' fill='white'%3E♡%3C/text%3E%3C/svg%3E">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=DM+Mono:wght@300;400&family=Inter:wght@300;400;500&display=swap"
+        rel="stylesheet"
+    >
+
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <!-- =========================================================
+         INTRO LOADER
+         (shown first, hidden by script.js once loading completes)
+    ========================================================== -->
+
+    <div id="loader" role="status" aria-live="polite">
+
+        <div class="loader-inner">
+
+            <div class="loader-label">
+                PREPARING SOMETHING UNNECESSARY
+            </div>
+
+            <div class="loader-line">
+                <div id="loader-progress"></div>
+            </div>
+
+            <div class="loader-percent">
+                <span id="loader-number">0</span>%
+            </div>
+
+        </div>
+
+    </div>
+
+    <noscript>
+        <div class="noscript-notice">
+            This page needs JavaScript enabled to run — please turn it on and reload.
+        </div>
+    </noscript>
+
+
+    <!-- =========================================================
+         GLOBAL VISUAL EFFECTS
+         (purely decorative, hidden from assistive tech)
+    ========================================================== -->
+
+    <div class="noise" aria-hidden="true"></div>
+
+    <div class="cursor-glow" aria-hidden="true"></div>
+
+    <div class="ambient-orb orb-1" aria-hidden="true"></div>
+    <div class="ambient-orb orb-2" aria-hidden="true"></div>
+
+    <div id="particles" aria-hidden="true"></div>
+
+
+    <!-- =========================================================
+         SOUND TOGGLE
+         Sound effects are generated live with the Web Audio API —
+         nothing to go missing there. Background music is a real
+         file (audio/background-music.mp3), routed through the same
+         volume graph, so this one button still mutes both together.
+    ========================================================== -->
+
+    <button
+        id="sound-toggle"
+        class="sound-toggle"
+        type="button"
+        aria-pressed="true"
+    >
+        <span class="sound-dot" aria-hidden="true"></span>
+        <span class="sound-label"></span>
+    </button>
+
+
+    <!-- =========================================================
+         NAVIGATION
+         "opening" isn't included — it's a one-time gate, not a
+         place you'd jump back to.
+    ========================================================== -->
+
+    <nav class="progress-dots" aria-label="Section navigation">
+
+        <button data-target="landing" class="dot" aria-label="Go to start"></button>
+        <button data-target="intro" class="dot" aria-label="Go to beginning"></button>
+        <button data-target="archive" class="dot" aria-label="Go to archive"></button>
+        <button data-target="machine" class="dot" aria-label="Go to machine"></button>
+        <button data-target="stars" class="dot" aria-label="Go to stars"></button>
+        <button data-target="gallery" class="dot" aria-label="Go to photos"></button>
+        <button data-target="ending" class="dot" aria-label="Go to ending"></button>
+
+    </nav>
+
+
+    <!-- =========================================================
+         SECTION 0 — OPENING GATE
+
+         This is the very first thing shown. Tapping it is also
+         what unlocks audio on mobile browsers (they require a
+         real tap before any sound is allowed to play), so it
+         does double duty: sets the tone AND starts the music.
+
+         Feel free to change the line below — keep it short.
+    ========================================================== -->
+
+    <section id="opening" class="page active">
+
+        <button type="button" id="opening-trigger" class="opening-trigger">
+
+            <span class="eyebrow">BEFORE WE START</span>
+
+            <h1 class="opening-title">
+                I wanted to learn more coding
+                <span>for you, hehehe.</span>
+            </h1>
+
+            <span class="tap-prompt">tap anywhere to open</span>
+
+        </button>
+
+    </section>
+
+
+    <!-- =========================================================
+         SECTION 1 — LANDING
+    ========================================================== -->
+
+    <section id="landing" class="page">
+
+        <div class="center-content">
+
+            <div class="eyebrow fade-in">
+                SOMETHING I MADE
+            </div>
+
+            <h1 class="hero-title">
+                for
+                <span>you.</span>
+            </h1>
+
+            <div class="subtitle fade-in delay-2">
+
+                <p>
+                    I could've just bought a gift.
+                </p>
+
+                <p>
+                    But that seemed a little too easy.
+                </p>
+
+            </div>
+
+            <button
+                class="main-button"
+                data-next="intro"
+                type="button"
+            >
+                <span>begin</span>
+                <span class="arrow" aria-hidden="true">→</span>
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================================
+         SECTION 2 — INTRO
+    ========================================================== -->
+
+    <section id="intro" class="page">
+
+        <div class="text-page">
+
+            <div class="eyebrow">
+                01 / BEGINNING
+            </div>
+
+            <div class="story-stack">
+
+                <p>
+                    I don't know if you've noticed, but I paid attention to a lot of little things.
+                </p>
+
+                <p class="story-line muted">
+                    Some things were obvious
+                </p>
+
+                <p class="story-line muted">
+                    Some things were subtle
+                </p>
+
+                <p class="story-line muted">
+                    Some things were spectacular to me.
+                </p>
+
+                <p class="story-line">
+                    So I decided to express them in this way.
+                </p>
+
+            </div>
+
+            <button
+                class="text-button"
+                data-next="archive"
+                type="button"
+            >
+                continue <span aria-hidden="true">→</span>
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================================
+         SECTION 3 — ARCHIVE
+    ========================================================== -->
+
+    <section id="archive" class="page">
+
+        <div class="section-container">
+
+            <p class="eyebrow">
+                02 / THE ARCHIVE
+            </p>
+
+            <h2>
+                Things that stuck with me.
+            </h2>
+
+
+            <div class="memory-grid">
+
+                <!-- =================================================
+                     MEMORY CARD 1
+
+                     WRITE SOMETHING PERSONAL HERE.
+
+                     Good options:
+                     • A tiny thing she said once
+                     • A weird habit you noticed
+                     • Something she probably forgot saying
+                     • Something specific rather than generic
+                -->
+
+                <button
+                    class="memory-card tilt-card"
+                    data-memory="0"
+                    type="button"
+                >
+
+                    <div class="card-number">
+                        01
+                    </div>
+
+                    <h3>
+                        The little things
+                    </h3>
+
+                    <p>
+                        Very important yaaa.
+                    </p>
+
+                    <div class="card-icon" aria-hidden="true">
+                        ↗
+                    </div>
+
+                </button>
+
+
+                <!-- =================================================
+                     MEMORY CARD 2
+
+                     WRITE A PARTICULAR MEMORY HERE.
+
+                     Try to describe a moment rather than simply
+                     saying how you feel.
+                -->
+
+                <button
+                    class="memory-card tilt-card"
+                    data-memory="1"
+                    type="button"
+                >
+
+                    <div class="card-number">
+                        02
+                    </div>
+
+                    <h3>
+                        A memory
+                    </h3>
+
+                    <p>
+                        One that stayed.
+                    </p>
+
+                    <div class="card-icon" aria-hidden="true">
+                        ↗
+                    </div>
+
+                </button>
+
+
+                <!-- =================================================
+                     MEMORY CARD 3
+
+                     WRITE SOMETHING YOU'VE OBSERVED ABOUT HER.
+
+                     Something subtle works much better than:
+                     "You're beautiful."
+                -->
+
+                <button
+                    class="memory-card tilt-card"
+                    data-memory="2"
+                    type="button"
+                >
+
+                    <div class="card-number">
+                        03
+                    </div>
+
+                    <h3>
+                        Thank you
+                    </h3>
+
+                    <p>
+                        Also important yaa hehe.
+                    </p>
+
+                    <div class="card-icon" aria-hidden="true">
+                        ↗
+                    </div>
+
+                </button>
+
+
+                <!-- =================================================
+                     MEMORY CARD 4
+
+                     USE AN INSIDE JOKE HERE.
+
+                     This should be the least serious card.
+                -->
+
+                <button
+                    class="memory-card tilt-card"
+                    data-memory="3"
+                    type="button"
+                >
+
+                    <div class="card-number">
+                        04
+                    </div>
+
+                    <h3>
+                        Something I want you to remember
+                    </h3>
+
+                    <p>
+                        My final thoughts.
+                    </p>
+
+                    <div class="card-icon" aria-hidden="true">
+                        ↗
+                    </div>
+
+                </button>
+
+            </div>
+
+
+            <button
+                class="text-button"
+                data-next="machine"
+                type="button"
+            >
+                there's more <span aria-hidden="true">→</span>
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================================
+         MEMORY MODAL
+    ========================================================== -->
+
+    <div
+        id="memory-modal"
+        class="modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="memory-title"
+        hidden
+    >
+
+        <div class="modal-content">
+
+            <button
+                class="close-button"
+                type="button"
+                aria-label="Close"
+            >
+                ×
+            </button>
+
+            <p
+                id="memory-number"
+                class="eyebrow"
+            ></p>
+
+            <h2 id="memory-title"></h2>
+
+            <div id="memory-text"></div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================================
+         SECTION 4 — MACHINE
+    ========================================================== -->
+
+    <section id="machine" class="page">
+
+        <div class="machine-container">
+
+            <p class="eyebrow">
+                03 / IMPORTANT RESEARCH
+            </p>
+
+            <h2>
+                A Completely<br>
+                Unnecessary<br>
+                Machine To Waste Your Time<span>™</span>
+            </h2>
+
+            <p>
+                Sumpah, gua sendiri juga gak tau ini gunanya buat apa, yang penting jadi kwkwk.
+            </p>
+
+            <button
+                id="run-button"
+                class="main-button"
+                type="button"
+            >
+                <span>initialize</span>
+                <span aria-hidden="true">→</span>
+            </button>
+
+
+            <div id="machine-output" aria-live="polite">
+
+                <div id="machine-text">
+                    Awaiting input...
+                </div>
+
+                <div class="progress-container">
+                    <div id="progress-bar"></div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================================
+         SECTION 5 — STAR FIELD
+    ========================================================== -->
+
+    <section id="stars" class="page">
+
+        <div class="stars-intro">
+
+            <p class="eyebrow">
+                04 / LOOK AROUND
+            </p>
+
+            <h2>
+                There's nothing important
+                about these stars... or are there?
+            </h2>
+
+            <p>
+                I think you like finding things, try to find the secret message
+            </p>
+
+            <p class="star-counter">
+                <span id="star-count">0</span> / 9 found
+            </p>
+
+        </div>
+
+        <div class="star-password-panel" aria-live="polite">
+            <label class="star-password-label" for="star-password-input">hidden code</label>
+            <div class="star-password-row">
+                <input
+                    id="star-password-input"
+                    class="star-password-input"
+                    type="password"
+                    maxlength="32"
+                    placeholder="enter code"
+                    autocomplete="off"
+                >
+                <button id="star-password-submit" class="star-password-button" type="button">
+                    unlock
+                </button>
+            </div>
+            <p id="star-password-message" class="star-password-message" aria-live="polite"></p>
+        </div>
+
+        <div id="star-field" aria-hidden="true"></div>
+
+
+        <button
+            id="star-continue"
+            class="text-button star-next"
+            type="button"
+        >
+            Click me kalau you already bored. <span aria-hidden="true">→</span>
+        </button>
+
+    </section>
+
+
+    <!-- =========================================================
+         SECTION 6 — PHOTOS
+
+         WHERE YOUR PICTURES GO:
+
+         1. Make a folder named "photos" next to this file.
+         2. Drop your pictures in it named 1.jpg, 2.jpg, 3.jpg,
+            4.jpg, 5.jpg, 6.jpg (any image works — just rename it).
+         3. Edit the <figcaption> under each frame below if you
+            want a short caption overlaid on that photo.
+
+         Until a photo is added, that frame just shows a quiet
+         placeholder telling you which filename it's waiting on —
+         nothing looks broken in the meantime.
+
+         EACH PHOTO NOW FLIPS:
+         Tapping/clicking a photo turns it over to reveal a short
+         description on the back. Edit the text inside each
+         <div class="frame-back"> below — that's where the
+         per-photo description goes. Keep it short; the back panel
+         is the same size as the photo.
+
+         Want more than 6? Copy one whole <figure class="frame...">
+         block (both the front and back <div>s inside it), paste it
+         before </div> below, and bump the numbers (photos/7.jpg,
+         data-slot="7", etc).
+    ========================================================== -->
+
+    <section id="gallery" class="page">
+
+        <div class="section-container gallery-container">
+
+            <p class="eyebrow">
+                05 / MY FAVOURITE PICTURES
+            </p>
+
+            <h2>
+                Some pictures that tell a long story.
+            </h2>
+
+            <p class="gallery-note">
+                Here's a small
+                <code>collage</code> of pictures and memories all I pick out.
+                Tap a photo to flip it and read a little more.
+            </p>
+
+            <div class="collage">
+
+                <figure class="frame tilt-card" data-slot="1" tabindex="0" role="button" aria-pressed="false" aria-label="Photo 1 — tap to flip and read the description">
+                    <div class="frame-flip">
+
+                        <div class="frame-face frame-front">
+                            <img
+                                data-src="photos/1.jpg"
+                                alt="Add your own photo here"
+                                loading="lazy"
+                                decoding="async"
+                            >
+                            <figcaption>a starry night. #BossGirl</figcaption>
+                            <span class="flip-hint" aria-hidden="true">tap to flip ↻</span>
+                        </div>
+
+                        <div class="frame-face frame-back">
+                            <!--
+                                WRITE A DESCRIPTION FOR THIS PHOTO.
+                                Where was it, what was happening, why
+                                does it matter? 2-3 short sentences.
+                            -->
+                            <p>This photo was one of the first I took of you, where you dressed so casual, no makeup but cantik banget anjir omg.</p>
+                        </div>
+
+                    </div>
+                </figure>
+
+                <figure class="frame tilt-card" data-slot="2" tabindex="0" role="button" aria-pressed="false" aria-label="Photo 2 — tap to flip and read the description">
+                    <div class="frame-flip">
+
+                        <div class="frame-face frame-front">
+                            <img
+                                data-src="photos/2.jpg"
+                                alt="Add your own photo here"
+                                loading="lazy"
+                                decoding="async"
+                            >
+                            <figcaption>funny business @ library</figcaption>
+                            <span class="flip-hint" aria-hidden="true">tap to flip ↻</span>
+                        </div>
+
+                        <div class="frame-face frame-back">
+                            <!--
+                                WRITE A DESCRIPTION FOR THIS PHOTO.
+                                Where was it, what was happening, why
+                                does it matter? 2-3 short sentences.
+                            -->
+                            <p>You are soo adorable in this one I just loved it so much aghh. Lucu banget u knowww... and you struggled so much at making the snake I kept making fun of you it was so hilarious AHAHHAHA.</p>
+                        </div>
+
+                    </div>
+                </figure>
+
+                <figure class="frame tilt-card" data-slot="3" tabindex="0" role="button" aria-pressed="false" aria-label="Photo 3 — tap to flip and read the description">
+                    <div class="frame-flip">
+
+                        <div class="frame-face frame-front">
+                            <img
+                                data-src="photos/3.jpg"
+                                alt="Add your own photo here"
+                                loading="lazy"
+                                decoding="async"
+                            >
+                            <figcaption>portuguese dinner with funnn ^^</figcaption>
+                            <span class="flip-hint" aria-hidden="true">tap to flip ↻</span>
+                        </div>
+
+                        <div class="frame-face frame-back">
+                            <!--
+                                WRITE A DESCRIPTION FOR THIS PHOTO.
+                                Where was it, what was happening, why
+                                does it matter? 2-3 short sentences.
+                            -->
+                            <p>Awhh the first time you tried nandos and I know you loved ittt. You holding my burger but haiya so pretty in this picture really.</p>
+                        </div>
+
+                    </div>
+                </figure>
+
+                <figure class="frame tilt-card" data-slot="4" tabindex="0" role="button" aria-pressed="false" aria-label="Photo 4 — tap to flip and read the description">
+                    <div class="frame-flip">
+
+                        <div class="frame-face frame-front">
+                            <img
+                                data-src="photos/4.jpg"
+                                alt="Add your own photo here"
+                                loading="lazy"
+                                decoding="async"
+                            >
+                            <figcaption>CUTIE PIE SPOTTED</figcaption>
+                            <span class="flip-hint" aria-hidden="true">tap to flip ↻</span>
+                        </div>
+
+                        <div class="frame-face frame-back">
+                            <!--
+                                WRITE A DESCRIPTION FOR THIS PHOTO.
+                                Where was it, what was happening, why
+                                does it matter? 2-3 short sentences.
+                            -->
+                            <p>Naaaa see! Miss Nicole is ready and cute to begin eating her pineapple rice awwww. U love this picture, and I love it tooo, no more needs to be said hehe.</p>
+                        </div>
+
+                    </div>
+                </figure>
+
+                <figure class="frame tilt-card" data-slot="5" tabindex="0" role="button" aria-pressed="false" aria-label="Photo 5 — tap to flip and read the description">
+                    <div class="frame-flip">
+
+                        <div class="frame-face frame-front">
+                            <img
+                                data-src="photos/5.jpg"
+                                alt="Add your own photo here"
+                                loading="lazy"
+                                decoding="async"
+                            >
+                            <figcaption>ya those eyes don't lie</figcaption>
+                            <span class="flip-hint" aria-hidden="true">tap to flip ↻</span>
+                        </div>
+
+                        <div class="frame-face frame-back">
+                            <!--
+                                WRITE A DESCRIPTION FOR THIS PHOTO.
+                                Where was it, what was happening, why
+                                does it matter? 2-3 short sentences.
+                            -->
+                            <p>This really made me jaw drop. You look so gorgeous and the hat suits you soo well. You look like a young mama omggg.</p>
+                        </div>
+
+                    </div>
+                </figure>
+
+                <figure class="frame tilt-card" data-slot="6" tabindex="0" role="button" aria-pressed="false" aria-label="Photo 6 — tap to flip and read the description">
+                    <div class="frame-flip">
+
+                        <div class="frame-face frame-front">
+                            <img
+                                data-src="photos/6.jpg"
+                                alt="Add your own photo here"
+                                loading="lazy"
+                                decoding="async"
+                            >
+                            <figcaption>2 idiots in a bus</figcaption>
+                            <span class="flip-hint" aria-hidden="true">tap to flip ↻</span>
+                        </div>
+
+                        <div class="frame-face frame-back">
+                            <!--
+                                WRITE A DESCRIPTION FOR THIS PHOTO.
+                                Where was it, what was happening, why
+                                does it matter? 2-3 short sentences.
+                            -->
+                            <p>Oke I include one the one with both of us soo funny and childish ahahaha. Thank you ya you made me sick on our last day ahahaha. Xiexieee</p>
+                        </div>
+
+                    </div>
+                </figure>
+
+            </div>
+
+
+            <button
+                class="text-button"
+                data-next="ending"
+                type="button"
+            >
+                continue <span aria-hidden="true">→</span>
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================================
+         SECTION 7 — ENDING
+    ========================================================== -->
+
+    <section id="ending" class="page">
+
+        <div class="ending-content">
+
+            <!-- Deliberately slow, because this section is
+                 supposed to feel like the climax. -->
+
+            <p class="ending-line">
+                I could have made this much more complicated.
+            </p>
+
+            <p class="ending-line">
+                More animations.
+            </p>
+
+            <p class="ending-line">
+                More pages.
+            </p>
+
+            <p class="ending-line">
+                More clever things.
+            </p>
+
+            <div class="ending-spacer"></div>
+
+            <h2 class="final-message">
+                But I think the simplest version
+                says enough.
+            </h2>
+
+            <p class="ending-line highlight">
+                I wanted to make something for you.
+            </p>
+
+            <p class="ending-small">
+                Not because I had to.<br>
+                Not because there was some special occasion.<br>
+                Just because I wanted to.
+            </p>
+
+
+            <!-- =====================================================
+                 THE CLIMAX
+
+                 This is the main line you requested.
+
+                 You can change the exact wording here later,
+                 but I recommend keeping it simple.
+            ====================================================== -->
+
+            <p class="ending-joke">
+                And because, apparently, building an
+                entire website was easier than buying a gift hehehe. Hope you enjoyed <3
+            </p>
+
+            <p class="signature">
+                — Bilal 
+            </p>
+
+            <div class="heart" aria-hidden="true">♡</div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================================
+         JAVASCRIPT
+    ========================================================== -->
+
+    <script src="script.js"></script>
+
+</body>
+</html>
